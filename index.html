@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 | Oferta Académica Zona 6</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B3A5C;--navy2:#2B4F76;--steel:#4A6D8C;
+  --light:#E8EEF4;--red:#C0392B;--gold:#D4A017;
+  --green:#27AE60;--orange:#E67E22;--gray:#F4F7FB;--text:#1A1A2E;
+}
+body{font-family:'Trebuchet MS',sans-serif;background:var(--gray);color:var(--text);min-height:100vh}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--steel);border-radius:4px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.tab-content{animation:fadeUp .35s ease}
+
+/* HEADER */
+.hdr{background:var(--navy);color:#fff;padding:28px 48px 24px;border-bottom:4px solid var(--gold);display:flex;align-items:baseline;gap:16px}
+.hdr-num{font-size:64px;font-weight:900;line-height:1;font-family:Georgia,serif;color:rgba(255,255,255,.1)}
+.hdr-title{font-size:26px;font-weight:700;letter-spacing:.5px;font-family:Georgia,serif}
+.hdr-sub{font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.55);margin-top:3px}
+
+/* TABS */
+.tabs{background:var(--navy2);display:flex;overflow-x:auto}
+.tb{padding:11px 22px;border:none;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:1.5px;white-space:nowrap;
+  color:rgba(255,255,255,.5);background:transparent;border-bottom:3px solid transparent;transition:all .2s;font-family:'Trebuchet MS',sans-serif}
+.tb.active{color:#fff;background:var(--navy);border-bottom:3px solid var(--gold)}
+.tb:hover:not(.active){color:rgba(255,255,255,.8)}
+
+/* CONTENT */
+.cnt{padding:28px 48px}
+.pnl{display:none}
+.pnl.active{display:block}
+
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;margin-bottom:24px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.mb24{margin-bottom:24px}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--light);padding:20px;transition:box-shadow .2s}
+.card:hover{box-shadow:0 4px 16px rgba(27,58,92,.1)}
+
+/* BLOCK TITLE */
+.bt{background:var(--navy);color:#fff;padding:7px 14px;font-size:10px;letter-spacing:2px;
+  font-weight:700;text-transform:uppercase;margin-bottom:14px;font-family:Georgia,serif}
+.bt.gold{background:var(--gold);color:var(--navy)}
+.bt.green{background:var(--green)}
+.bt.orange{background:var(--orange)}
+.bt.red{background:var(--red)}
+.bt.steel{background:var(--steel)}
+
+/* SOURCE */
+.src{font-size:9px;color:#7A8FA6;margin-top:8px;font-style:italic}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:11px}
+thead tr{background:var(--navy);color:#fff}
+thead th{padding:8px 10px;text-align:left;font-size:10px;letter-spacing:1px}
+tbody tr{border-bottom:1px solid var(--light);transition:background .15s}
+tbody tr:hover{background:#EBF0F7!important;cursor:default}
+tbody tr:nth-child(even){background:#F9FBFD}
+td{padding:7px 10px}
+.td-n{font-weight:600;color:var(--navy)}
+.td-c{text-align:center}
+.td-hl{background:#FFF9E6!important;border-left:3px solid var(--gold)!important}
+.td-pub{background:#EBF5FB!important}
+.td-pri{background:#FEF9EF!important}
+
+/* BADGES */
+.badge{border-radius:3px;padding:2px 8px;font-size:9px;font-weight:700;color:#fff;display:inline-block}
+.b-navy{background:var(--navy)}.b-green{background:var(--green)}.b-orange{background:var(--orange)}
+.b-red{background:var(--red)}.b-steel{background:var(--steel)}.b-gold{background:var(--gold);color:var(--navy)}
+.b-pub{background:#2980B9}.b-pri{background:#8E44AD}
+
+/* INFO */
+.info{background:var(--light);border-left:4px solid var(--navy);padding:16px 20px;margin-bottom:20px}
+.info-t{font-size:10px;font-weight:700;color:var(--navy);letter-spacing:2px;margin-bottom:8px}
+
+/* KPI */
+.kpi{background:var(--light);padding:16px;text-align:center;border-top:3px solid var(--navy);
+  transition:transform .2s,box-shadow .2s;cursor:default}
+.kpi:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.1)}
+.kpi-v{font-size:26px;font-weight:800;font-family:Georgia,serif}
+.kpi-l{font-size:10px;font-weight:700;margin-top:4px}
+.kpi-s{font-size:9px;color:var(--steel);margin-top:2px}
+
+/* CHART */
+.cw{position:relative;height:240px}
+.cw-sm{position:relative;height:180px}
+.cw-md{position:relative;height:200px}
+
+/* IES CARD */
+.ies-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.ies-card{background:#fff;border:1px solid var(--light);border-top:4px solid var(--navy);
+  padding:0;overflow:hidden;transition:all .25s;cursor:pointer}
+.ies-card:hover{box-shadow:0 6px 24px rgba(27,58,92,.15);transform:translateY(-2px)}
+.ies-card.selected{box-shadow:0 0 0 2px var(--gold);transform:translateY(-2px)}
+.ies-head{padding:12px 16px;background:var(--navy);color:#fff}
+.ies-tipo{font-size:8px;letter-spacing:2px;color:rgba(255,255,255,.55);margin-bottom:3px}
+.ies-nombre{font-size:12px;font-weight:700;font-family:Georgia,serif;line-height:1.3}
+.ies-body{padding:14px 16px}
+.ies-stat{display:flex;justify-content:space-between;font-size:10px;padding:4px 0;border-bottom:1px solid var(--light)}
+.ies-stat:last-child{border:none}
+.ies-stat-v{font-weight:700;color:var(--navy)}
+.ies-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:10px}
+.ies-tag{font-size:8px;background:var(--light);color:var(--navy);padding:2px 7px;border-radius:20px;font-weight:600}
+
+/* DETALLE IES */
+.ies-detail{background:#fff;border:1px solid var(--light);padding:22px;margin-bottom:20px;
+  border-left:4px solid var(--gold);animation:fadeUp .25s ease;display:none}
+.ies-detail.open{display:block}
+.ies-detail-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px}
+.ies-detail-title{font-size:16px;font-weight:700;color:var(--navy);font-family:Georgia,serif}
+.ies-detail-sub{font-size:10px;color:var(--steel);margin-top:3px}
+.ies-carreras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ies-carrera-item{background:var(--light);padding:8px 10px;font-size:10px;border-radius:3px}
+.ies-carrera-item strong{display:block;color:var(--navy);font-size:10px;margin-bottom:2px}
+
+/* ÁREA CHART TOGGLE */
+.area-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.area-btn{font-size:9px;font-weight:700;padding:5px 14px;border-radius:20px;
+  border:1px solid var(--light);background:#fff;color:var(--text);
+  cursor:pointer;transition:all .2s;font-family:'Trebuchet MS',sans-serif;letter-spacing:.5px}
+.area-btn.active,.area-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* JORNADA/MODALIDAD */
+.donut-row{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:24px}
+.donut-wrap{text-align:center}
+.donut-title{font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1.5px;margin-bottom:10px}
+.donut-legend{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.dl-row{display:flex;align-items:center;gap:8px;font-size:10px}
+.dl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* SERIE DEMANDA */
+.serie-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.sf-btn{font-size:9px;font-weight:700;padding:4px 12px;border-radius:20px;
+  border:1px solid var(--light);background:#fff;color:var(--text);
+  cursor:pointer;transition:all .2s;font-family:'Trebuchet MS',sans-serif}
+.sf-btn.active,.sf-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* DOMINANTES */
+.dom-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+.dom-card{background:#fff;border:1px solid var(--light);padding:16px;border-radius:4px;
+  border-left:3px solid var(--navy);transition:all .2s}
+.dom-card:hover{box-shadow:0 3px 10px rgba(0,0,0,.08);border-left-color:var(--gold)}
+.dom-prov{font-size:9px;font-weight:700;color:var(--steel);letter-spacing:1.5px;margin-bottom:6px}
+.dom-areas{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.dom-badge{font-size:9px;padding:2px 8px;border-radius:20px;font-weight:600;background:var(--light);color:var(--navy)}
+.dom-arrow{font-size:18px;color:var(--navy);font-weight:700}
+
+/* CONCL */
+.concl{background:var(--navy);color:#fff;padding:20px;border-radius:4px;margin-top:24px}
+.concl-t{font-size:10px;font-weight:700;color:var(--gold);letter-spacing:2px;margin-bottom:12px}
+.concl-g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:11px;line-height:1.7}
+.concl-st{color:var(--gold);font-weight:700;margin-bottom:5px;font-size:12px}
+
+/* EXPAND */
+.expand-card{background:#fff;border:1px solid var(--light);margin-bottom:10px;overflow:hidden;transition:all .2s}
+.expand-head{padding:13px 18px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.expand-head:hover{background:rgba(27,58,92,.04)}
+.expand-label{font-size:11px;font-weight:700;color:var(--navy)}
+.expand-sub{font-size:9px;color:var(--steel);margin-top:2px}
+.expand-arrow{font-size:11px;color:var(--steel);transition:transform .25s}
+.expand-card.open .expand-arrow{transform:rotate(180deg)}
+.expand-body{display:none;padding:0 18px 16px;font-size:10px;color:#555;line-height:1.7}
+.expand-body.open{display:block;animation:fadeUp .2s ease}
+
+/* FOOTER */
+.ftr{background:#EEF2F6;border-top:2px solid var(--navy);padding:16px 48px}
+.ftr-t{font-size:9px;color:var(--steel);font-weight:700;letter-spacing:2px;margin-bottom:6px}
+.ftr-r{display:grid;grid-template-columns:1fr 1fr;gap:2px 32px;font-size:9px;color:#5A6E82;line-height:1.8}
+
+@media(max-width:900px){
+  .cnt,.hdr,.ftr{padding:16px 20px}
+  .g2,.g3,.g4,.ies-grid,.dom-grid,.donut-row,.concl-g,.ies-carreras-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <span class="hdr-num">02</span>
+  <div>
+    <div class="hdr-title">OFERTA ACADÉMICA ZONA 6</div>
+    <div class="hdr-sub">DIAGNÓSTICO EDUCATIVO TERRITORIAL · DEMOGRÁFICO · ECONÓMICO · EQUIPAMIENTO · SERIE DE DEMANDA</div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tb active" onclick="switchTab(0)">2.1 Contexto General</button>
+  <button class="tb" onclick="switchTab(1)">2.2 Equipamiento Existente</button>
+  <button class="tb" onclick="switchTab(2)">2.3 Oferta por Provincia</button>
+  <button class="tb" onclick="switchTab(3)">2.4 Jornada / Modalidad</button>
+  <button class="tb" onclick="switchTab(4)">2.5 Serie de Demanda</button>
+</div>
+
+<div class="cnt">
+
+<!-- ══ 2.1 CONTEXTO GENERAL ══ -->
+<div class="pnl active tab-content" id="tab-0">
+
+  <!-- KPIs -->
+  <div class="g4">
+    <div class="kpi" style="border-top-color:var(--navy)">
+      <div class="kpi-v" style="color:var(--navy)" data-target="1085251" data-int="1">0</div>
+      <div class="kpi-l">Habitantes Zona 6 (aprox.)</div>
+      <div class="kpi-s">Población total registrada · INEC 2022</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--gold)">
+      <div class="kpi-v" style="color:var(--gold)" data-target="26" data-int="1">0</div>
+      <div class="kpi-l">Instituciones de Educ. Superior</div>
+      <div class="kpi-s">Universidades e institutos activos · SENESCYT 2022</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--orange)">
+      <div class="kpi-v" style="color:var(--orange)" data-target="35" data-int="1">0</div>
+      <div class="kpi-l">Carreras técnicas Zona 6</div>
+      <div class="kpi-s">A través de 7 institutos · El Mercurio oct. 2022</div>
+    </div>
+    <div class="kpi" style="border-top-color:var(--green)">
+      <div class="kpi-v" style="color:var(--green)" data-target="95" data-int="1">0</div>
+      <div class="kpi-l">% Empleabilidad carrera dual</div>
+      <div class="kpi-s">Tec. Azuay — Asesoría Financiera · 2022</div>
+    </div>
+  </div>
+
+  <!-- Tres dimensiones -->
+  <div class="g3">
+    <!-- Demográfico -->
+    <div class="card">
+      <div class="bt">Dimensión demográfica</div>
+      <div class="cw-sm"><canvas id="chDemog"></canvas></div>
+      <div style="font-size:11px;line-height:1.75;margin-top:12px">
+        <strong>Población total:</strong> 1.085.251 hab. — grupo 17–25 años como población universitaria predominante,
+        con crecimiento sostenido del grupo joven especialmente en Morona Santiago (0,68%/año).
+        Cuenca concentra el 64,8% de la demanda estudiantil de la zona.
+      </div>
+      <p class="src"><strong>Fuente:</strong> INEC — Censo 2022; EPP Revisión 2024; Dirección de Planificación GAD Cuenca / ONU Habitat, 2019</p>
+    </div>
+
+    <!-- Educacional -->
+    <div class="card">
+      <div class="bt">Dimensión educacional</div>
+      <div style="font-size:11px;line-height:1.8;margin-bottom:14px">
+        La oferta académica se <strong>concentra en Cuenca</strong> (pública y privada). Fuera de Cuenca predominan institutos
+        con cobertura desigual y baja diversificación. Las áreas dominantes en toda la zona son
+        Ingeniería/Tecnologías e Informática/TI (50% en Azuay), y Educación/Administración en Cañar y Morona Santiago.
+      </div>
+      <div class="cw-sm"><canvas id="chEduc"></canvas></div>
+      <p class="src"><strong>Fuente:</strong> SENESCYT — Oferta académica vigente 2022; El Mercurio oct. 2022 (35 carreras técnicas / 7 institutos Zona 6)</p>
+    </div>
+
+    <!-- Económico -->
+    <div class="card">
+      <div class="bt">Dimensión económica</div>
+      <div style="font-size:11px;line-height:1.8;margin-bottom:14px">
+        Ingresos medios-bajos en la región. Acceso limitado con apoyo de becas SENESCYT.
+        Alta dependencia de la oferta pública. Continuidad académica afectada por factores económicos.
+        El 54,2% de la PEA de la zona opera en el sector informal (INEC ENEMDU 2024).
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
+        <div style="background:var(--light);padding:12px;text-align:center;border-top:2px solid var(--navy)">
+          <div style="font-size:20px;font-weight:800;color:var(--navy);font-family:Georgia,serif">$399</div>
+          <div style="font-size:9px;color:var(--steel);margin-top:3px">Ingreso mediano PEA Zona 6<br>ENEMDU 2024</div>
+        </div>
+        <div style="background:var(--light);padding:12px;text-align:center;border-top:2px solid var(--orange)">
+          <div style="font-size:20px;font-weight:800;color:var(--orange);font-family:Georgia,serif">54,2%</div>
+          <div style="font-size:9px;color:var(--steel);margin-top:3px">Sector informal<br>INEC ENEMDU 2024</div>
+        </div>
+        <div style="background:var(--light);padding:12px;text-align:center;border-top:2px solid var(--green);grid-column:1/-1">
+          <div style="font-size:20px;font-weight:800;color:var(--green);font-family:Georgia,serif">Becas SENESCYT</div>
+          <div style="font-size:9px;color:var(--steel);margin-top:3px">Incentivo económico mensual para institutos técnicos públicos · siau.senescyt.gob.ec/convocatorias</div>
+        </div>
+      </div>
+      <p class="src"><strong>Fuente:</strong> INEC ENEMDU I Trim. 2024; SENESCYT — Convocatorias becas institutos 2022</p>
+    </div>
+  </div>
+
+  <!-- Interpretación -->
+  <div class="info">
+    <div class="info-t">DIAGNÓSTICO EDUCATIVO TERRITORIAL — ZONA 6</div>
+    <p style="font-size:11px;line-height:1.8">
+      La Zona 6 presenta un <strong>desequilibrio estructural</strong> entre la concentración de oferta educativa en Cuenca
+      y la dispersión de la demanda en tres provincias. Las áreas de mayor postulación (Ingeniería, Salud, Derecho, Administración)
+      coexisten con una <strong>cobertura técnico-tecnológica insuficiente</strong>: solo 35 carreras técnicas en 7 institutos
+      para 195.753 jóvenes de 17–25 años. El modelo de empleabilidad dual del Tec. Azuay
+      (95% de egresados con empleo antes de graduarse en carrera dual) confirma la pertinencia y viabilidad del modelo técnico,
+      pero su escala actual es insuficiente para cubrir la demanda interprovincial.
+    </p>
+  </div>
+</div>
+
+<!-- ══ 2.2 EQUIPAMIENTO EXISTENTE ══ -->
+<div class="pnl tab-content" id="tab-1">
+
+  <div class="info mb24">
+    <div class="info-t">CIUDADES Y CANTONES CON INSTITUCIONES DE EDUCACIÓN SUPERIOR — ZONA 6</div>
+    <p style="font-size:11px;line-height:1.8">
+      La Zona 6 cuenta con <strong>26 instituciones de educación superior</strong> (14 en Azuay, 7 en Cañar y 5 en Morona Santiago),
+      distribuidas entre universidades y conservatorios con sedes en Cuenca, Azogues, Cañar, La Troncal, Macas, Limón Indanza y Sucúa.
+      Haz clic en cada IES para ver su detalle completo de oferta.
+    </p>
+  </div>
+
+  <!-- FILTRO PROVINCIA -->
+  <div class="area-toggle mb24">
+    <button class="area-btn active" onclick="filterIES('todas',this)">Todas</button>
+    <button class="area-btn" onclick="filterIES('azuay',this)">Azuay (14)</button>
+    <button class="area-btn" onclick="filterIES('canar',this)">Cañar (7)</button>
+    <button class="area-btn" onclick="filterIES('morona',this)">Morona Santiago (5)</button>
+    <button class="area-btn" onclick="filterIES('publica',this)">Solo públicas</button>
+    <button class="area-btn" onclick="filterIES('privada',this)">Solo privadas</button>
+  </div>
+
+  <div class="ies-grid" id="iesGrid"></div>
+  <div class="ies-detail" id="iesDetail"></div>
+
+  <!-- Mapa de ciudades -->
+  <div class="card mb24">
+    <div class="bt">Distribución de IES por cantón y tipo — Zona 6 (SENESCYT 2022)</div>
+    <div class="cw"><canvas id="chIES"></canvas></div>
+    <p class="src"><strong>Fuente:</strong> SENESCYT — Oferta académica vigente 2022; El Mercurio Cuenca oct. 2022; universidadesdeecuador.com (institución individual)</p>
+  </div>
+
+  <!-- Tabla equipamiento -->
+  <div class="card">
+    <div class="bt">Resumen equipamiento existente por provincia</div>
+    <table>
+      <thead><tr>
+        <th>Provincia</th><th>Universidades</th><th>Institutos Tecnológicos</th>
+        <th>Conservatorios</th><th>Total IES</th><th>% del total Z6</th><th>Ciudades con IES</th>
+      </tr></thead>
+      <tbody>
+        <tr class="td-pub">
+          <td class="td-n">Azuay</td><td>5 (UCuenca, UCACUE, UDA, UPS, UTPL ext.)</td>
+          <td>9 (Tec. Azuay + 8 privados)</td><td>1 (Conservatorio José María Rodríguez)</td>
+          <td><span class="badge b-navy">14</span></td><td>53,8%</td><td>Cuenca (principal)</td>
+        </tr>
+        <tr class="td-pri">
+          <td class="td-n">Cañar</td><td>2 (UNAE, ext. UCACUE)</td>
+          <td>3 (Tec. del Austro, Tec. Quilloac, Tec. La Troncal)</td><td>—</td>
+          <td><span class="badge b-navy2">7</span></td><td>26,9%</td><td>Azogues, Cañar, La Troncal</td>
+        </tr>
+        <tr>
+          <td class="td-n">Morona Santiago</td><td>1 (ext. UCACUE Macas)</td>
+          <td>4 (Tec. Limón, Tec. Sucúa, Tec. Bilingüe Shuar-Achuar, ESPOCH sede)</td><td>—</td>
+          <td><span class="badge b-steel">5</span></td><td>19,2%</td><td>Macas, Sucúa, Limón Indanza, Gualaquiza</td>
+        </tr>
+        <tr class="td-hl">
+          <td><strong>ZONA 6 TOTAL</strong></td><td>8 universidades/extensiones</td>
+          <td>16 institutos tecnológicos</td><td>1</td>
+          <td><span class="badge b-gold">26 IES</span></td><td>100%</td><td>7 ciudades / cantones</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="src"><strong>Fuente:</strong> SENESCYT — Oferta académica vigente Zona 6, 2022; El Mercurio oct. 2022; universidadesdeecuador.com; tecazuay.edu.ec; formaciontecnologica.uazuay.edu.ec</p>
+  </div>
+</div>
+
+<!-- ══ 2.3 OFERTA POR PROVINCIA ══ -->
+<div class="pnl tab-content" id="tab-2">
+
+  <!-- SELECTOR PROVINCIA -->
+  <div class="area-toggle mb24" id="provSelector">
+    <button class="area-btn active" onclick="selectProv('azuay',this)">🏙️ Azuay / Cuenca</button>
+    <button class="area-btn" onclick="selectProv('canar',this)">🏔️ Cañar</button>
+    <button class="area-btn" onclick="selectProv('morona',this)">🌿 Morona Santiago</button>
+  </div>
+
+  <!-- AZUAY -->
+  <div id="prov-azuay" class="prov-content">
+    <div class="g2">
+      <div class="card">
+        <div class="bt">Oferta académica Cuenca / Azuay — por área académica</div>
+        <div class="area-toggle" style="margin-bottom:12px">
+          <button class="area-btn active" onclick="setProvChart('azuay','pct',this)">Porcentaje</button>
+          <button class="area-btn" onclick="setProvChart('azuay','abs',this)">Nº programas</button>
+        </div>
+        <div class="cw"><canvas id="chAzuay"></canvas></div>
+        <p class="src"><strong>Fuente:</strong> SENESCYT — Oferta académica IES Zona 6, 2022; universidadesdeecuador.com (instituciones individuales)</p>
+      </div>
+      <div class="card">
+        <div class="bt">Áreas dominantes — diagnóstico</div>
+        <div class="dom-grid" style="grid-template-columns:1fr;gap:10px;margin-bottom:0">
+          <div class="dom-card">
+            <div class="dom-prov">ÁREA 1 — MAYOR REPRESENTACIÓN</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Ingeniería / Tecnologías</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">50% de los programas técnicos · UCuenca, UPS, UCACUE, Tec. Azuay</div>
+              </div>
+            </div>
+          </div>
+          <div class="dom-card" style="border-left-color:var(--steel)">
+            <div class="dom-prov">ÁREA 2</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow" style="color:var(--steel)">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Ciencias Jurídicas / Salud</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">38% cada área · Concentración en carreras saturadas</div>
+              </div>
+            </div>
+          </div>
+          <div class="dom-card" style="border-left-color:var(--orange)">
+            <div class="dom-prov">ÁREA 3 — EMERGENTE</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow" style="color:var(--orange)">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Informática / TI</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">50% — carrera técnica con mayor crecimiento en demanda laboral</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="src" style="margin-top:14px"><strong>Fuente:</strong> SENESCYT oferta académica 2022; WEF Future of Jobs 2025</p>
+      </div>
+    </div>
+
+    <!-- Tabla IES Azuay -->
+    <div class="card mb24">
+      <div class="bt">Instituciones de Educación Superior — Azuay (detalle por tipo)</div>
+      <table>
+        <thead><tr><th>Institución</th><th>Tipo</th><th>Financiamiento</th><th>Carreras destacadas</th><th>Áreas fuertes</th></tr></thead>
+        <tbody>
+          <tr class="td-pub"><td class="td-n">Universidad de Cuenca (UCuenca)</td><td>Universidad</td><td><span class="badge b-pub">PÚBLICA</span></td>
+            <td>56 de tercer nivel, 93 de cuarto nivel (151 ofertas totales)</td><td>Ingeniería, Medicina, Arquitectura, Artes, Hospitalidad, Agropecuarias</td></tr>
+          <tr class="td-pri"><td class="td-n">Universidad del Azuay (UDA)</td><td>Universidad + Tecnológicos rurales</td><td><span class="badge b-pri">PRIVADA</span></td>
+            <td>Carreras universitarias + Tecnológicos: Turismo Rural, Agroecología, Procesamiento Lácteos (230 est.)</td><td>Administración, Diseño, Derecho, Tecnológicos rurales</td></tr>
+          <tr class="td-pri"><td class="td-n">Univ. Católica de Cuenca (UCACUE)</td><td>Universidad cofinanciada</td><td><span class="badge b-pri">COFIN.</span></td>
+            <td>83 carreras presenciales en 3 provincias (Azuay, Cañar, Morona Santiago)</td><td>Derecho, Ing. Civil, Medicina, Administración, TI</td></tr>
+          <tr class="td-pri"><td class="td-n">Univ. Politécnica Salesiana (UPS)</td><td>Universidad</td><td><span class="badge b-pri">PRIVADA</span></td>
+            <td>Ingeniería de Sistemas, Ingeniería Mecánica, Gestión para el Desarrollo Local</td><td>TI, Ingenierías, Ciencias Sociales</td></tr>
+          <tr class="td-pri"><td class="td-n">Extensión UTPL</td><td>Extensión universitaria</td><td><span class="badge b-pri">PRIVADA</span></td>
+            <td>Oferta en modalidad en línea y presencial</td><td>Administración, Educación, Derecho</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. del Azuay (ISTA)</td><td>Instituto Tecnológico</td><td><span class="badge b-pub">PÚBLICA</span></td>
+            <td>20–25 carreras: Software, Big Data, Ciberseguridad, Mecatrónica, Metalmecánica, Madera, Electricidad, Tributación, Audiovisual, Patrimonio Cultural</td><td>TI, Producción industrial, Patrimonio</td></tr>
+          <tr class="td-pri"><td class="td-n">Tec. American College, Sudamericano, Kevin ITEK, San Isidro, Tecniempresarial Wissen, Economía Social, Alquimia</td><td>Institutos privados (7)</td><td><span class="badge b-pri">PRIVADA</span></td>
+            <td>Administración financiera, Desarrollo de Software, Gastronomía básica</td><td>Adm., Finanzas, TI básico</td></tr>
+          <tr class="td-pub"><td class="td-n">Conservatorio José María Rodríguez</td><td>Conservatorio Superior</td><td><span class="badge b-pub">PÚBLICA</span></td>
+            <td>Música, instrumento, teoría musical</td><td>Artes musicales</td></tr>
+        </tbody>
+      </table>
+      <p class="src"><strong>Fuente:</strong> SENESCYT 2022; universidadesdeecuador.com (UCuenca: 151 ofertas 2025; UCACUE: 83 carreras presenciales); tecazuay.edu.ec 2024; formaciontecnologica.uazuay.edu.ec 2024; El Mercurio oct. 2022</p>
+    </div>
+  </div>
+
+  <!-- CAÑAR -->
+  <div id="prov-canar" class="prov-content" style="display:none">
+    <div class="g2">
+      <div class="card">
+        <div class="bt">Oferta académica Cañar — por área académica</div>
+        <div class="cw"><canvas id="chCanar"></canvas></div>
+        <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica 2022; universidadesdeecuador.com (UNAE, UCACUE sedes Cañar)</p>
+      </div>
+      <div class="card">
+        <div class="bt">Áreas dominantes — diagnóstico Cañar</div>
+        <div class="dom-grid" style="grid-template-columns:1fr;gap:10px;margin-bottom:0">
+          <div class="dom-card">
+            <div class="dom-prov">DOMINANTE 1</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Educación / Administración</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">29% cada área — UNAE como principal referente en educación</div>
+              </div>
+            </div>
+          </div>
+          <div class="dom-card" style="border-left-color:var(--orange)">
+            <div class="dom-prov">DOMINANTE 2</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow" style="color:var(--orange)">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Ingeniería / Tecnologías</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">29% — extensiones UCACUE; Tec. Quilloac intercultural</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:rgba(192,57,43,.06);border-left:3px solid var(--red);padding:12px;border-radius:3px">
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:4px">ÁREAS SIN COBERTURA EN CAÑAR</div>
+            <div style="font-size:10px;color:var(--text)">Salud técnica · Turismo y cultura · Mercadotecnia digital · Construcción sostenible · Agropecuaria técnica avanzada</div>
+          </div>
+        </div>
+        <p class="src" style="margin-top:14px"><strong>Fuente:</strong> SENESCYT oferta académica 2022 (Cañar)</p>
+      </div>
+    </div>
+    <div class="card mb24">
+      <div class="bt">Instituciones de Educación Superior — Cañar</div>
+      <table>
+        <thead><tr><th>Institución</th><th>Sede / Ciudad</th><th>Tipo</th><th>Oferta destacada</th></tr></thead>
+        <tbody>
+          <tr class="td-pub"><td class="td-n">UNAE (Universidad Nacional de Educación)</td><td>Azogues</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Educación (formación docente), Educación Básica, Educación Inicial, Pedagogía</td></tr>
+          <tr class="td-pri"><td class="td-n">UCACUE — Sede Azogues</td><td>Azogues</td><td><span class="badge b-pri">COFIN.</span></td><td>Derecho, Adm. Empresas, Contabilidad, Ingeniería Civil, Medicina</td></tr>
+          <tr class="td-pri"><td class="td-n">UCACUE — Extensión Cañar</td><td>Cañar</td><td><span class="badge b-pri">COFIN.</span></td><td>Carreras de administración y derecho</td></tr>
+          <tr class="td-pri"><td class="td-n">UCACUE — Extensión La Troncal</td><td>La Troncal</td><td><span class="badge b-pri">COFIN.</span></td><td>Administración de Empresas, Contabilidad</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. del Austro</td><td>Azogues</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Administración básica, Producción agrícola (limitada)</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. Pedagógico Intercultural Bilingüe Quilloac</td><td>Cañar</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Pedagogía intercultural bilingüe, Educación kichwa</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. La Troncal</td><td>La Troncal</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Administración, Producción agropecuaria básica</td></tr>
+        </tbody>
+      </table>
+      <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica Cañar 2022; universidadesdeecuador.com (UCACUE — 83 carreras en 3 provincias)</p>
+    </div>
+  </div>
+
+  <!-- MORONA SANTIAGO -->
+  <div id="prov-morona" class="prov-content" style="display:none">
+    <div class="g2">
+      <div class="card">
+        <div class="bt">Oferta académica Morona Santiago — por área académica</div>
+        <div class="cw"><canvas id="chMorona"></canvas></div>
+        <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica 2022 (Morona Santiago)</p>
+      </div>
+      <div class="card">
+        <div class="bt">Áreas dominantes — diagnóstico Morona Santiago</div>
+        <div class="dom-grid" style="grid-template-columns:1fr;gap:10px;margin-bottom:0">
+          <div class="dom-card">
+            <div class="dom-prov">DOMINANTE ÚNICA</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Tecnologías / Ingeniería</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">50% de la oferta — alta concentración en un solo campo</div>
+              </div>
+            </div>
+          </div>
+          <div class="dom-card" style="border-left-color:var(--steel)">
+            <div class="dom-prov">SEGUNDA ÁREA</div>
+            <div style="display:flex;align-items:center;gap:10px">
+              <span class="dom-arrow" style="color:var(--steel)">→</span>
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--navy)">Administración / Economía</div>
+                <div style="font-size:10px;color:var(--steel);margin-top:2px">25% — UCACUE sede Macas; oferta básica</div>
+              </div>
+            </div>
+          </div>
+          <div style="background:rgba(192,57,43,.06);border-left:3px solid var(--red);padding:12px;border-radius:3px">
+            <div style="font-size:9px;font-weight:700;color:var(--red);letter-spacing:1px;margin-bottom:4px">DÉFICIT CRÍTICO EN MORONA SANTIAGO</div>
+            <div style="font-size:10px;color:var(--text)">Sin salud técnica · Sin turismo ecoturístico técnico · Sin mercadotecnia · Sin construcción · Sin agropecuaria técnica de escala. Pese a ser la provincia con mayor crecimiento joven (0,68%/año).</div>
+          </div>
+        </div>
+        <p class="src" style="margin-top:14px"><strong>Fuente:</strong> SENESCYT oferta académica 2022 (Morona Santiago); INEC proyecciones 2024</p>
+      </div>
+    </div>
+    <div class="card mb24">
+      <div class="bt">Instituciones de Educación Superior — Morona Santiago</div>
+      <table>
+        <thead><tr><th>Institución</th><th>Sede / Ciudad</th><th>Tipo</th><th>Oferta destacada</th></tr></thead>
+        <tbody>
+          <tr class="td-pri"><td class="td-n">UCACUE — Sede Macas</td><td>Macas</td><td><span class="badge b-pri">COFIN.</span></td><td>Administración de Empresas, Derecho, Contabilidad</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. Limón</td><td>Limón Indanza</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Administración, TI básico</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. Sucúa</td><td>Sucúa</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Administración, Producción agropecuaria básica</td></tr>
+          <tr class="td-pub"><td class="td-n">Tec. Bilingüe Shuar-Achuar</td><td>Macas / Sucúa</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Pedagogía intercultural bilingüe shuar, Administración comunitaria</td></tr>
+          <tr class="td-pub"><td class="td-n">ESPOCH — Sede Morona Santiago</td><td>Macas</td><td><span class="badge b-pub">PÚBLICA</span></td><td>Ingeniería Agropecuaria, Ingeniería en Administración de Empresas Agropecuarias</td></tr>
+        </tbody>
+      </table>
+      <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica 2022; ESPOCH espoch.edu.ec; universidadesdeecuador.com (UCACUE)</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 2.4 JORNADA / MODALIDAD ══ -->
+<div class="pnl tab-content" id="tab-3">
+
+  <div class="donut-row">
+    <div class="donut-wrap">
+      <div class="donut-title">JORNADA</div>
+      <div style="position:relative;height:160px"><canvas id="chJornada"></canvas></div>
+      <div class="donut-legend">
+        <div class="dl-row"><div class="dl-dot" style="background:var(--navy2)"></div><span><strong>65%</strong> Diurna</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:var(--steel)"></div><span><strong>25%</strong> Nocturna</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:var(--light);border:1px solid var(--steel)"></div><span><strong>10%</strong> Mixta</span></div>
+      </div>
+    </div>
+    <div class="donut-wrap">
+      <div class="donut-title">MODALIDAD</div>
+      <div style="position:relative;height:160px"><canvas id="chModalidad"></canvas></div>
+      <div class="donut-legend">
+        <div class="dl-row"><div class="dl-dot" style="background:var(--navy)"></div><span><strong>75%</strong> Presencial</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:var(--steel)"></div><span><strong>15%</strong> Semipresencial</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:#B0C8D9"></div><span><strong>10%</strong> En línea / otro</span></div>
+      </div>
+    </div>
+    <div class="donut-wrap">
+      <div class="donut-title">DURACIÓN</div>
+      <div style="position:relative;height:160px"><canvas id="chDuracion"></canvas></div>
+      <div class="donut-legend">
+        <div class="dl-row"><div class="dl-dot" style="background:var(--navy)"></div><span><strong>45%</strong> Universitaria (5–10 sem.)</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:var(--navy2)"></div><span><strong>30%</strong> Técnica (4 per.)</span></div>
+        <div class="dl-row"><div class="dl-dot" style="background:var(--steel)"></div><span><strong>25%</strong> Tecnológica (5–6 per.)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Análisis jornada -->
+  <div class="g2">
+    <div class="card">
+      <div class="bt">Jornada por tipo de institución — implicaciones de diseño</div>
+      <table>
+        <thead><tr><th>Tipo IES</th><th>Jornada predominante</th><th>Usuarios pico</th><th>Implicación arquitectónica</th></tr></thead>
+        <tbody>
+          <tr><td class="td-n">Universidades (UCuenca, UDA, UCACUE)</td><td>Diurna (65%)</td><td>8:00–18:00</td><td>Máxima ocupación aulas/laboratorios en horario diurno; comedores con alta demanda al mediodía</td></tr>
+          <tr><td class="td-n">Institutos tecnológicos públicos</td><td>Diurna + Nocturna (25%)</td><td>7:00–21:00</td><td>Campus operativo en doble jornada; iluminación, seguridad y circulaciones para jornada nocturna</td></tr>
+          <tr><td class="td-n">Institutos privados / en línea</td><td>Nocturna / mixta (35%)</td><td>17:00–22:00</td><td>Estudiantes trabajadores; acceso a transporte público tardío; zonas de estudio y coworking</td></tr>
+          <tr class="td-hl"><td class="td-n"><strong>Proyecto propuesto</strong></td><td><strong>Doble jornada</strong></td><td>7:00–22:00</td><td>Diseño en doble jornada reduce m² necesarios en 20–30% — mismos espacios, dos turnos de uso</td></tr>
+        </tbody>
+      </table>
+      <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica 2022 (jornada y modalidad); El Mercurio oct. 2022 (Tec. Azuay); CES Reglamento Régimen Académico 2022</p>
+    </div>
+    <div class="card">
+      <div class="bt">Modalidad por provincia — Zona 6 (comparativa)</div>
+      <div class="cw-sm"><canvas id="chModalProv"></canvas></div>
+      <p class="src"><strong>Fuente:</strong> SENESCYT oferta académica 2022; universidadesdeecuador.com (institución individual); El Mercurio oct. 2022</p>
+    </div>
+  </div>
+
+  <!-- Análisis expand -->
+  <div class="expand-card" onclick="toggleExpand(this)">
+    <div class="expand-head">
+      <div><div class="expand-label">💡 Lectura de la jornada y modalidad para el proyecto arquitectónico</div>
+      <div class="expand-sub">Click para expandir</div></div>
+      <span class="expand-arrow">▼</span>
+    </div>
+    <div class="expand-body">
+      <p>La combinación de jornada <strong>diurna (65%) y nocturna (25%)</strong> en la Zona 6 tiene implicaciones directas para el dimensionamiento del proyecto.
+      Un campus en <strong>doble jornada</strong> puede atender hasta un 40% más de estudiantes con la misma superficie construida, reduciendo la inversión inicial
+      y ampliando la cobertura sin aumentar proporcionalmente el área construida. La modalidad presencial dominante (75%) confirma que el proyecto requiere
+      espacios físicos de calidad — aulas, laboratorios, talleres y zonas de bienestar — como elemento central del programa arquitectónico.
+      El 15% semipresencial justifica además la inclusión de <strong>aulas digitales y espacios de coworking</strong> para estudio autónomo con conectividad de alta velocidad.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 2.5 SERIE DE DEMANDA ══ -->
+<div class="pnl tab-content" id="tab-4">
+
+  <div class="info mb24">
+    <div class="info-t">SERIE DE DEMANDA DE CARRERAS — ZONA 6 (2017–2022)</div>
+    <p style="font-size:11px;line-height:1.8">
+      La serie de demanda refleja la evolución de postulaciones por área académica en los institutos de la Zona 6
+      entre 2017 y 2022 (12 semestres). Los datos muestran una tendencia de crecimiento sostenido en tecnologías,
+      informática y salud, con un descenso relativo en áreas administrativas tradicionales.
+      Las áreas dominantes históricas son <strong>Tecnologías / Ingeniería e Informática / TI</strong>,
+      con salud y administración como acompañantes constantes.
+    </p>
+  </div>
+
+  <!-- Serie gráfico -->
+  <div class="card mb24">
+    <div class="bt">Serie temporal de demanda por área — Zona 6 (2017–2022)</div>
+    <div class="serie-filters">
+      <button class="sf-btn active" onclick="toggleSerie('todas',this)">Todas las áreas</button>
+      <button class="sf-btn" onclick="toggleSerie('tecnologia',this)">Tecnologías / Ing.</button>
+      <button class="sf-btn" onclick="toggleSerie('informatica',this)">Informática / TI</button>
+      <button class="sf-btn" onclick="toggleSerie('salud',this)">Salud</button>
+      <button class="sf-btn" onclick="toggleSerie('admin',this)">Administración</button>
+      <button class="sf-btn" onclick="toggleSerie('juridicas',this)">Jurídicas</button>
+    </div>
+    <div class="cw" style="height:260px"><canvas id="chSerie"></canvas></div>
+    <p class="src"><strong>Fuente:</strong> SENESCYT — Datos de postulación semestral Zona 6, 2017–2022; Dirección de Planificación GAD Cuenca / ONU Habitat, 2019; elaboración propia</p>
+  </div>
+
+  <!-- Tabla tendencias -->
+  <div class="card mb24">
+    <div class="bt">Tendencias por área académica — Zona 6 (2017–2022)</div>
+    <table>
+      <thead><tr>
+        <th>Área académica</th><th>Tendencia 2017–2022</th><th>Posición en ranking Z6</th>
+        <th>Relación mercado laboral</th><th>Proyección 2025–2030</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">Ingeniería / Tecnologías</td><td>↑↑ Crecimiento sostenido</td><td>#1 (50% representación)</td>
+          <td>Alta demanda — manufactura Cuenca, automatización</td><td><span class="badge b-green">SIGUE CRECIENDO</span></td></tr>
+        <tr><td class="td-n">Informática / TI</td><td>↑↑ Crecimiento acelerado</td><td>#1 empatado (50%)</td>
+          <td>Muy alta — escasez de talento crítica en Ecuador</td><td><span class="badge b-green">CRECIMIENTO ACELERADO</span></td></tr>
+        <tr><td class="td-n">Salud y Bienestar</td><td>↑ Crecimiento moderado</td><td>#2 (38%)</td>
+          <td>Alta en técnicos especializados; saturada en medicina general</td><td><span class="badge b-orange">BIFURCADA</span></td></tr>
+        <tr><td class="td-n">Administración / Economía</td><td>→ Estable / ligero descenso</td><td>#2 empatado (38%)</td>
+          <td>Media — saturación progresiva en perfiles generalistas</td><td><span class="badge b-orange">SATURÁNDOSE</span></td></tr>
+        <tr><td class="td-n">Ciencias Jurídicas</td><td>→ Estable</td><td>#2 (38% Azuay)</td>
+          <td>Baja — exceso de abogados en Ecuador (25.096 postulantes/año nac.)</td><td><span class="badge b-red">SATURADA</span></td></tr>
+        <tr><td class="td-n">Artes / Música / Danza</td><td>↓ Descenso relativo</td><td>#3 (38%)</td>
+          <td>Baja — mercado restringido; alta dependencia de sector público</td><td><span class="badge b-steel">ESTABLE BAJO</span></td></tr>
+        <tr><td class="td-n">Sociales / Comunicación</td><td>→ Estable bajo</td><td>#4 (25%)</td>
+          <td>Media-baja — digitalización afecta perfil tradicional</td><td><span class="badge b-steel">TRANSFORMÁNDOSE</span></td></tr>
+      </tbody>
+    </table>
+    <p class="src"><strong>Fuente:</strong> SENESCYT 2022 (oferta académica vigente Zona 6); WEF Future of Jobs 2025; INEC ENEMDU 2024</p>
+  </div>
+
+  <!-- Conclusión -->
+  <div class="concl">
+    <div class="concl-t">CONCLUSIONES DEL APARTADO 2</div>
+    <div class="concl-g">
+      <div>
+        <div class="concl-st">Equipamiento existente</div>
+        La Zona 6 cuenta con 26 IES (14 Azuay, 7 Cañar, 5 Morona Santiago), concentradas en Cuenca.
+        Solo 35 carreras técnicas en 7 institutos para 195.753 jóvenes. Morona Santiago es el territorio con mayor
+        crecimiento joven y menor oferta técnica de la zona.
+      </div>
+      <div>
+        <div class="concl-st">Tendencia educacional</div>
+        Las áreas de Tecnologías e Informática/TI lideran la demanda y el crecimiento, mientras Administración
+        y Derecho muestran señales de saturación. Salud está bifurcada: saturada en nivel universitario,
+        con déficit crítico en técnicos especializados. La oferta técnica no responde a estas tendencias.
+      </div>
+      <div>
+        <div class="concl-st">Implicación para el proyecto</div>
+        El proyecto debe orientarse hacia las áreas de mayor crecimiento de demanda y menor cobertura:
+        TI, construcción sostenible, turismo-cultura, salud técnica, agropecuaria y mercadotecnia digital.
+        La modalidad diurna-nocturna y el modelo dual optimizan el uso del campus y amplían la cobertura.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /cnt -->
+
+<!-- FOOTER -->
+<div class="ftr">
+  <div class="ftr-t">REFERENCIAS BIBLIOGRÁFICAS — APARTADO 02</div>
+  <div class="ftr-r">
+    <div>• SENESCYT. (2022). Oferta académica vigente Zona 6 — universidades e institutos 2022. admision.senescyt.gob.ec</div>
+    <div>• El Mercurio Cuenca. (2022). Las carreras técnicas y tecnológicas, una opción para bachilleres. oct. 2022. elmercurio.com.ec</div>
+    <div>• Universidad de Cuenca. (2025). Oferta académica — 151 programas activos. ucuenca.edu.ec</div>
+    <div>• Universidad del Azuay. (2024). Tecnológicos rurales: Turismo Rural, Agroecología, Lácteos. formaciontecnologica.uazuay.edu.ec</div>
+    <div>• Universidad Católica de Cuenca. (2025). 83 carreras presenciales Azuay, Cañar y Morona Santiago. ucacue.edu.ec</div>
+    <div>• Instituto Tecnológico del Azuay. (2024). Oferta académica vigente 20–25 carreras. tecazuay.edu.ec</div>
+    <div>• universidadesdeecuador.com. (2025). Perfiles institucionales UCuenca, UCACUE, UPS, UDA. universidadesdeecuador.com</div>
+    <div>• INEC. (2024). ENEMDU I Trimestre 2024 — empleo por rama. ecuadorencifras.gob.ec</div>
+    <div>• GAD Municipal Cuenca / ONU Habitat. (2019). PUGS — Diagnóstico educativo Zona 6. cuenca.gob.ec</div>
+    <div>• SENESCYT SIAU. (2024). Matriz referencial de carreras TIC — IES particulares. siau.senescyt.gob.ec</div>
+    <div>• WEF. (2025). Future of Jobs Report 2025. weforum.org</div>
+    <div>• CES. (2022). Reglamento de Régimen Académico. ces.gob.ec</div>
+  </div>
+</div>
+
+<script>
+/* ══ COLORES ══ */
+const N='#1B3A5C',N2='#2B4F76',ST='#4A6D8C',RD='#C0392B',GR='#27AE60',OR='#E67E22',GO='#D4A017';
+const CH={};
+function mkChart(id,cfg){
+  if(CH[id]){CH[id].destroy();delete CH[id]}
+  const c=document.getElementById(id)?.getContext('2d');
+  if(!c)return;
+  CH[id]=new Chart(c,cfg);
+}
+const tc='#4A5568',gc='#E2E8F0';
+
+/* ══ IES DATA ══ */
+const iesData=[
+  {id:0,tipo:'UNIVERSIDAD PÚBLICA',nombre:'Universidad de Cuenca (UCuenca)',prov:'azuay',fin:'publica',
+   ciudad:'Cuenca',campus:'2 campus (Paraíso + Yanuncay)',carreras:'56 tercer nivel / 93 cuarto nivel (151 total)',
+   areas:['Medicina','Arquitectura','Ingeniería','Hospitalidad','Artes','Agropecuarias','Derecho','TI'],
+   color:N,nota:'Mayor IES pública de la Zona 6. 5 campus temáticos en Cuenca. Único campus con Ciencias Agropecuarias, Artes y Hospitalidad.'},
+  {id:1,tipo:'UNIVERSIDAD PRIVADA COFINANCIADA',nombre:'Univ. Católica de Cuenca (UCACUE)',prov:'azuay',fin:'privada',
+   ciudad:'Cuenca + Azogues + Macas',campus:'Sede + extensiones en Cañar y Morona Santiago',carreras:'83 carreras presenciales en 3 provincias',
+   areas:['Derecho','Ingeniería Civil','Medicina','Administración','TI','Agronomía','Enfermería','Marketing'],
+   color:N2,nota:'Única IES con presencia en las 3 provincias de la Zona 6. Ofrece modalidades presencial, en línea, híbrida y dual.'},
+  {id:2,tipo:'UNIVERSIDAD PRIVADA',nombre:'Universidad del Azuay (UDA)',prov:'azuay',fin:'privada',
+   ciudad:'Cuenca + zonas rurales',campus:'Campus central + tecnológicos rurales',carreras:'Univ. + 3 tecnológicos rurales (230 est.)',
+   areas:['Administración','Diseño','Derecho','Turismo Rural','Agroecología','Lácteos'],
+   color:ST,nota:'Única con tecnológicos rurales activos (Turismo Rural, Agroecología, Procesamiento Lácteos). 230 estudiantes en tecnológicos 2022.'},
+  {id:3,tipo:'UNIVERSIDAD PRIVADA',nombre:'Univ. Politécnica Salesiana (UPS)',prov:'azuay',fin:'privada',
+   ciudad:'Cuenca',campus:'Campus Cuenca',carreras:'Ingeniería Sistemas, Ing. Mecánica, Desarrollo Local',
+   areas:['TI','Ingeniería','Ciencias Sociales'],
+   color:'#6B8FA8',nota:'Fuerte en ingeniería de sistemas y TI. Vinculación con sector industrial.'},
+  {id:4,tipo:'INSTITUTO TECNOLÓGICO PÚBLICO',nombre:'Instituto Tecnológico del Azuay (ISTA)',prov:'azuay',fin:'publica',
+   ciudad:'Cuenca — Parque Industrial',campus:'Sede en Parque Industrial de Cuenca',carreras:'20–25 carreras técnicas y tecnológicas',
+   areas:['Software','Big Data','Ciberseguridad','Mecatrónica','Metalmecánica','Madera','Electricidad','Patrimonio Cultural'],
+   color:GR,nota:'Único instituto tecnológico público de Cuenca. Modelo dual: 95% empleabilidad en asesoría financiera. 400 nuevos estudiantes por ciclo en 2024.'},
+  {id:5,tipo:'UNIVERSIDAD PÚBLICA',nombre:'UNAE (Univ. Nacional de Educación)',prov:'canar',fin:'publica',
+   ciudad:'Azogues',campus:'Campus Azogues',carreras:'Pedagogía, Educación Básica, Educación Inicial, Educación Especial',
+   areas:['Educación','Pedagogía'],
+   color:N,nota:'Única universidad pública especializada en formación docente de la Zona 6. Sede nacional en Azogues.'},
+  {id:6,tipo:'INSTITUTO TECNOLÓGICO PÚBLICO',nombre:'Tec. Pedagógico Intercultural Bilingüe Quilloac',prov:'canar',fin:'publica',
+   ciudad:'Cañar',campus:'Sede Cañar',carreras:'Pedagogía intercultural bilingüe kichwa',
+   areas:['Educación intercultural'],
+   color:ST,nota:'Formación docente en lengua kichwa. Pertinencia cultural para comunidades indígenas del cantón Cañar.'},
+  {id:7,tipo:'INSTITUTO TECNOLÓGICO PÚBLICO',nombre:'Tec. La Troncal + Tec. del Austro',prov:'canar',fin:'publica',
+   ciudad:'La Troncal / Azogues',campus:'Dos sedes',carreras:'Administración, Producción agropecuaria básica',
+   areas:['Administración','Agropecuaria básica'],
+   color:'#6B8FA8',nota:'Cobertura básica en zona de influencia agroindustrial (La Troncal — industria azucarera).'},
+  {id:8,tipo:'ESCUELA SUPERIOR POLITÉCNICA — SEDE',nombre:'ESPOCH — Sede Morona Santiago',prov:'morona',fin:'publica',
+   ciudad:'Macas',campus:'Sede Macas',carreras:'Ingeniería Agropecuaria, Administración Empresas Agropecuarias',
+   areas:['Agropecuaria','Administración'],
+   color:N,nota:'Única IES universitaria de tipo politécnico en Morona Santiago. Orientación agropecuaria estratégica para la región.'},
+  {id:9,tipo:'INSTITUTOS TECNOLÓGICOS PÚBLICOS (3)',nombre:'Tec. Limón / Sucúa / Bilingüe Shuar-Achuar',prov:'morona',fin:'publica',
+   ciudad:'Limón Indanza / Sucúa / Macas',campus:'3 sedes',carreras:'Administración básica, TI básico, Pedagogía intercultural shuar',
+   areas:['Administración','TI básico','Educación shuar'],
+   color:OR,nota:'Cobertura mínima en una provincia con 34.266 jóvenes de 17–25 años y la mayor tasa de crecimiento de la zona (0,68%/año).'},
+];
+
+let selectedIES=null;
+let filterActive='todas';
+
+function filterIES(f,btn){
+  filterActive=f;
+  document.querySelectorAll('.area-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedIES=null;
+  document.getElementById('iesDetail').classList.remove('open');
+  renderIESGrid();
+}
+
+function renderIESGrid(){
+  const grid=document.getElementById('iesGrid');
+  if(!grid)return;
+  const filtered=iesData.filter(d=>{
+    if(filterActive==='todas')return true;
+    if(filterActive==='publica')return d.fin==='publica';
+    if(filterActive==='privada')return d.fin==='privada';
+    return d.prov===filterActive;
+  });
+  grid.innerHTML=filtered.map(d=>`
+    <div class="ies-card ${selectedIES===d.id?'selected':''}"
+      style="border-top-color:${d.color}" onclick="selectIES(${d.id})">
+      <div class="ies-head" style="background:${d.color}">
+        <div class="ies-tipo">${d.tipo}</div>
+        <div class="ies-nombre">${d.nombre}</div>
+      </div>
+      <div class="ies-body">
+        <div class="ies-stat"><span>Ciudad</span><span class="ies-stat-v">${d.ciudad}</span></div>
+        <div class="ies-stat"><span>Campus</span><span class="ies-stat-v" style="font-size:9px">${d.campus}</span></div>
+        <div class="ies-stat"><span>Carreras</span><span class="ies-stat-v" style="font-size:9px;max-width:120px;text-align:right">${d.carreras}</span></div>
+        <div class="ies-tags">
+          ${d.areas.slice(0,4).map(a=>`<span class="ies-tag">${a}</span>`).join('')}
+          ${d.areas.length>4?`<span class="ies-tag">+${d.areas.length-4} más</span>`:''}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function selectIES(id){
+  selectedIES=selectedIES===id?null:id;
+  renderIESGrid();
+  const det=document.getElementById('iesDetail');
+  if(selectedIES===null){det.classList.remove('open');return;}
+  const d=iesData.find(x=>x.id===id);
+  det.classList.add('open');
+  det.innerHTML=`
+    <div class="ies-detail-header">
+      <div>
+        <div class="ies-detail-title" style="color:${d.color}">${d.nombre}</div>
+        <div class="ies-detail-sub">${d.tipo} · ${d.ciudad}</div>
+      </div>
+      <span class="badge" style="background:${d.color}">${d.fin.toUpperCase()}</span>
+    </div>
+    <div style="font-size:10px;line-height:1.75;color:var(--text);margin-bottom:14px;
+      background:var(--light);padding:12px 14px;border-radius:4px">${d.nota}</div>
+    <div style="font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;margin-bottom:8px">CAMPUS Y COBERTURA</div>
+    <div style="font-size:10px;color:var(--text);margin-bottom:12px">${d.campus}</div>
+    <div style="font-size:10px;font-weight:700;color:var(--navy);letter-spacing:1px;margin-bottom:8px">ÁREAS ACADÉMICAS ACTIVAS</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px">${d.areas.map(a=>`<span class="ies-tag" style="font-size:10px">${a}</span>`).join('')}</div>`;
+}
+
+/* ══ PROVINCIA OFERTA ══ */
+let provActive='azuay';
+function selectProv(p,btn){
+  provActive=p;
+  document.querySelectorAll('.area-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prov-content').forEach(el=>el.style.display='none');
+  document.getElementById(`prov-${p}`).style.display='block';
+  setTimeout(()=>drawProvChart(p),60);
+}
+
+let provChartMode={azuay:'pct',canar:'pct',morona:'pct'};
+function setProvChart(prov,mode,btn){
+  provChartMode[prov]=mode;
+  document.querySelectorAll('.area-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  drawProvChart(prov);
+}
+
+const areas=['Salud y Bienestar','Educación','Adm./Economía','Ciencias Jurídicas','Arquitectura/Diseño',
+  'Ingeniería/Tecnologías','Informática/TI','Ciencias Agropecuarias','Sociales/Comunicación',
+  'Artes/Música/Danza','Psicología','Control Riesgos','Ciencias Forenses'];
+const dataProv={
+  azuay:{pct:[38,25,38,38,25,50,50,38,25,38,25,0,0],abs:[5,3,5,5,3,7,7,5,3,5,3,0,0]},
+  canar:{pct:[0,29,29,14,0,29,0,14,14,14,14,14,0],abs:[0,2,2,1,0,2,0,1,1,1,1,1,0]},
+  morona:{pct:[0,0,25,0,0,50,0,0,0,0,0,0,0],abs:[0,0,1,0,0,2,0,0,0,0,0,0,0]},
+};
+const areaColors=[N,N2,ST,'#5A8AAC','#7AABA8',GR,'#4CAF8F','#8FAFC5','#A0B8CE','#B0C8D9','#C5D8E5','#DAECF4','#EEF5FA'];
+
+function drawProvChart(p){
+  const mode=provChartMode[p]||'pct';
+  const d=dataProv[p];
+  const vals=mode==='pct'?d.pct:d.abs;
+  const id='ch'+p.charAt(0).toUpperCase()+p.slice(1);
+  mkChart(id,{type:'bar',
+    data:{labels:areas,datasets:[{data:vals,
+      backgroundColor:areaColors,borderRadius:4,
+      label:mode==='pct'?'% de programas':'Nº programas'}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},
+        tooltip:{callbacks:{label:c=>mode==='pct'?`${c.raw}% de los programas`:(`${c.raw} programas`)}}},
+      scales:{x:{max:mode==='pct'?60:10,grid:{color:gc},ticks:{callback:v=>mode==='pct'?`${v}%`:v,font:{size:9},color:tc}},
+        y:{grid:{display:false},ticks:{font:{size:8},color:tc}}}}});
+}
+
+/* ══ SERIE DEMANDA ══ */
+const semestres=['I-2017','II-2017','I-2018','II-2018','I-2019','II-2019','I-2020','II-2020','I-2021','II-2021','I-2022','II-2022'];
+const serieData={
+  tecnologia:[620,640,680,700,720,750,600,620,780,820,880,950],
+  informatica:[540,560,600,620,660,700,580,610,720,760,840,1020],
+  salud:[480,490,510,520,540,550,470,490,560,580,610,640],
+  admin:[700,720,740,750,760,770,680,700,740,730,720,710],
+  juridicas:[560,570,580,590,600,610,530,550,580,570,560,555],
+};
+const serieColors={tecnologia:N,informatica:GR,salud:OR,admin:ST,juridicas:RD};
+const serieLabels={tecnologia:'Ingeniería/Tecnologías',informatica:'Informática/TI',salud:'Salud',admin:'Administración/Economía',juridicas:'Ciencias Jurídicas'};
+
+function toggleSerie(f,btn){
+  document.querySelectorAll('.sf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const keys=f==='todas'?Object.keys(serieData):[f];
+  mkChart('chSerie',{type:'line',
+    data:{labels:semestres,
+      datasets:keys.map(k=>({
+        label:serieLabels[k],data:serieData[k],
+        borderColor:serieColors[k],backgroundColor:serieColors[k]+'20',
+        borderWidth:2,pointRadius:3,fill:f==='todas'?false:true,tension:.35
+      }))},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{font:{size:9},color:tc}}},
+      scales:{y:{grid:{color:gc},ticks:{font:{size:9},color:tc}},
+        x:{grid:{display:false},ticks:{font:{size:8},color:tc,maxRotation:45}}}}});
+}
+
+/* ══ EXPAND ══ */
+function toggleExpand(card){
+  card.classList.toggle('open');
+  const body=card.querySelector('.expand-body');
+  body.classList.toggle('open');
+  body.style.display=body.classList.contains('open')?'block':'none';
+}
+
+/* ══ COUNTERS ══ */
+function animateKPIs(){
+  document.querySelectorAll('[data-target]').forEach(el=>{
+    if(el.dataset.animated)return;el.dataset.animated=1;
+    const target=parseFloat(el.dataset.target),isInt=!!el.dataset.int;
+    let st=0,dur=1200,t0=null;
+    function step(ts){
+      if(!t0)t0=ts;const p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3),v=st+e*(target-st);
+      el.textContent=isInt?Math.floor(v).toLocaleString():v.toFixed(2);
+      if(p<1)requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+
+/* ══ CHARTS PER TAB ══ */
+function drawChartsTab(t){
+  if(t===0){
+    mkChart('chDemog',{type:'doughnut',
+      data:{labels:['Azuay (64,8%)','Cañar (17,7%)','Morona Santiago (17,5%)'],
+        datasets:[{data:[64.8,17.7,17.5],backgroundColor:[N,ST,OR],borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'50%',
+        plugins:{legend:{position:'bottom',labels:{font:{size:9},color:tc}}}}});
+    mkChart('chEduc',{type:'bar',
+      data:{labels:['Azuay','Cañar','Morona Santiago'],
+        datasets:[
+          {label:'Oferta técnica (carreras)',data:[25,7,3],backgroundColor:N+'CC',borderRadius:4},
+          {label:'Jóvenes 17–25 (miles)',data:[127,35,34],backgroundColor:GO+'CC',borderRadius:4}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{font:{size:9},color:tc}}},
+        scales:{y:{grid:{color:gc},ticks:{font:{size:9},color:tc}},
+          x:{grid:{display:false},ticks:{font:{size:10},color:tc}}}}});
+  }
+  if(t===1){
+    mkChart('chIES',{type:'bar',
+      data:{labels:['Azuay / Cuenca','Cañar\n(Azogues, Cañar, La Troncal)','Morona Santiago\n(Macas, Sucúa, Limón)'],
+        datasets:[
+          {label:'Universidades/extensiones',data:[5,2,1],backgroundColor:N+'CC',borderRadius:4},
+          {label:'Institutos tecnológicos',data:[9,4,4],backgroundColor:N2+'CC',borderRadius:4},
+          {label:'Conservatorios',data:[1,0,0],backgroundColor:ST+'CC',borderRadius:4}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{font:{size:9},color:tc}}},
+        scales:{y:{stacked:true,grid:{color:gc},ticks:{font:{size:9},color:tc}},
+          x:{stacked:true,grid:{display:false},ticks:{font:{size:8},color:tc,maxRotation:0}}}}});
+  }
+  if(t===2){drawProvChart(provActive);}
+  if(t===3){
+    const donutOpts=(labels,data,colors)=>({type:'doughnut',
+      data:{labels,datasets:[{data,backgroundColor:colors,borderWidth:2,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'55%',
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.label}: ${c.raw}%`}}}}});
+    mkChart('chJornada',...[donutOpts(['Diurna (65%)','Nocturna (25%)','Mixta (10%)'],[65,25,10],[N2,ST,'#B0C8D9'])]);
+    mkChart('chModalidad',...[donutOpts(['Presencial (75%)','Semipresencial (15%)','En línea (10%)'],[75,15,10],[N,ST,'#B0C8D9'])]);
+    mkChart('chDuracion',...[donutOpts(['Universitaria (45%)','Técnica 4 per. (30%)','Tecnológica 5–6 per. (25%)'],[45,30,25],[N,N2,ST])]);
+    mkChart('chModalProv',{type:'bar',
+      data:{labels:['Azuay','Cañar','Morona Santiago'],
+        datasets:[
+          {label:'Presencial',data:[72,80,85],backgroundColor:N+'CC',borderRadius:4},
+          {label:'Semipresencial',data:[18,12,8],backgroundColor:N2+'CC',borderRadius:4},
+          {label:'En línea',data:[10,8,7],backgroundColor:ST+'CC',borderRadius:4}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{font:{size:9},color:tc}}},
+        scales:{y:{max:100,ticks:{callback:v=>`${v}%`,font:{size:9},color:tc},grid:{color:gc}},
+          x:{grid:{display:false},ticks:{font:{size:10},color:tc}}}}});
+  }
+  if(t===4){toggleSerie('todas',document.querySelector('.sf-btn.active'));}
+}
+
+/* ══ TAB SWITCH ══ */
+let activeTab=0;
+function switchTab(i){
+  document.querySelectorAll('.pnl').forEach((p,idx)=>p.classList.toggle('active',idx===i));
+  document.querySelectorAll('.tb').forEach((b,idx)=>b.classList.toggle('active',idx===i));
+  activeTab=i;
+  setTimeout(()=>drawChartsTab(i),60);
+  if(i===0)setTimeout(animateKPIs,200);
+}
+
+/* ══ INIT ══ */
+renderIESGrid();
+drawChartsTab(0);
+setTimeout(animateKPIs,300);
+document.querySelectorAll('.expand-body').forEach(b=>b.style.display='none');
+</script>
+</body>
+</html>
